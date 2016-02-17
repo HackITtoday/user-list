@@ -49,15 +49,17 @@
         <template is="dom-repeat" items="{{users}}">
           <a href="/user/{{keys(index, data)}}" style="text-decoration: none;">
             <paper-item style="margin-left: 20px;">
-              <b style="width:300px; font-weight: 300;">{{dataAllUser[keys(index, data)].user.google.displayName}}</b>
+              <b style="width:300px; font-weight: 300;">
+                {{getName(dataAllUser,index, data)}}
+              </b>
               <div id="visitslist" class="userNumbers">
-                {{getVisits(dataAllUser[keys(index, data)])}}
+                {{getVisits(dataAllUser,index, data)}}
               </div>
               <div id="badgeslist" class="userNumbers">
-                {{getBadges(dataAllUser[keys(index, data)])}}
+                {{getBadges(dataAllUser,index, data)}}
               </div>
               <div id="surveyslist" class="userNumbers">
-                {{getSurveys(dataAllUser[keys(index, data)])}}
+                {{getSurveys(dataAllUser,index, data)}}
               </div>
             </paper-item>
           </a>
@@ -75,7 +77,8 @@
     cat: function(a, b) {
       return a + b
     },
-    getVisits: function(user) {
+    getVisits: function(allUsers, index, data) {
+      var user = allUsers[Object.keys(data)[index]]
       var theCount = 0
       for (var index in user.log) {
         if (user.log.hasOwnProperty(index)) {
@@ -91,7 +94,8 @@
       }
       return theCount
     },
-    getBadges: function(user) {
+    getBadges: function(allUsers, index, data) {
+      var user = allUsers[Object.keys(data)[index]]
       var count = 0
       if (!user.badges) {
         return "0/?"
@@ -104,7 +108,8 @@
       }
       return count + "/" + Object.keys(user.badges).length
     },
-    getSurveys: function(user) {
+    getSurveys: function(allUsers, index, data) {
+      var user = allUsers[Object.keys(data)[index]]
       var count = 0
       if (!user.surveys) {
         return "0/?"
@@ -116,6 +121,10 @@
         }
       }
       return count + "/" + Object.keys(user.surveys).length
+    },
+    getName: function(allUsers, index, data) {
+      var user = allUsers[Object.keys(data)[index]]
+      return user.user.google.displayName
     }
   })
 </script>
