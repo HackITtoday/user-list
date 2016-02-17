@@ -124,12 +124,10 @@
     },
     getName: function(allUsers, index, data) {
       var user = allUsers[Object.keys(data)[index]]
-      if (user.hasOwnProperty("user")){
-        if (user.user.hasOwnProperty("google")){
-          if (user.user.google.hasOwnProperty("displayName")){
-            return user.user.google.displayName
-          }
-        }
+      if (user.hasOwnProperty("user") && user.user.hasOwnProperty("google") && user.user.google.hasOwnProperty("displayName")){
+        return user.user.google.displayName
+      } else {
+        return Object.keys(data)[index]
       }
     }
   })
