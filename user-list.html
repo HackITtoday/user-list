@@ -14,7 +14,6 @@
         color: #333;
         font-weight: 300;
       }
-
       iron-icon {
         color: #FFF;
         height: 40px;
@@ -22,25 +21,23 @@
         float: right;
         margin: 15px 20px 0px 0px;
       }
-
       .topHeading {
         float: left;
         margin: 10px 0 0 0px;
       }
-
       .userNumbers {
         margin-right: 100px;
         width: 100px;
         text-align: right;
       }
-
       paper-item {
         border-bottom-width: 1px;
         border-bottom-color: #333;
         border-bottom-style: inset;
       }
     </style>
-    <mediator-data data="{{data}}" sync='["badges","log","surveys"]' over-write folder="{{cat(uid,'/users')}}" default-folder="." location="https://hi9site.firebaseio.com/users" as-array="{{users}}"></mediator-data>
+    <mediator-data data="{{data}}" folder="{{cat(uid,'/users')}}" location="https://hi9site.firebaseio.com/users" as-array="{{users}}"></mediator-data>
+    <iron-ajax auto url="https://hi9site.firebaseio.com/users.json" last-response="{{dataAllUser}}"></iron-ajax>
     <div id="userHeadings" style="font-size: 24px; float: left; width: 100%; margin-left: 30px;">
       <div id="nameOf" class="topHeading" style="margin-right:270px;">Name</div>
       <div id="visitsDone" class="topHeading" style="margin-right: 140px;">Visits</div>
@@ -50,22 +47,20 @@
     <div id="listofUsers" style="float:left;">
       <paper-menu style="clear:both">
         <template is="dom-repeat" items="{{users}}">
-          <template is="dom-if" if="{{item.user.google.displayName}}">
-            <a href="/user/{{keys(index, data)}}" style="text-decoration: none;">
-              <paper-item style="margin-left: 20px;">
-                <b style="width:300px; font-weight: 300;">{{item.user.google.displayName}}</b>
-                <div id="visitslist" class="userNumbers">
-                  {{getVisits(item)}}
-                </div>
-                <div id="badgeslist" class="userNumbers">
-                  {{getBadges(item)}}
-                </div>
-                <div id="surveyslist" class="userNumbers">
-                  {{getSurveys(item)}}
-                </div>
-              </paper-item>
-            </a>
-          </template>
+          <a href="/user/{{keys(index, data)}}" style="text-decoration: none;">
+            <paper-item style="margin-left: 20px;">
+              <b style="width:300px; font-weight: 300;">{{dataAllUser[keys(index, data)].user.google.displayName}}</b>
+              <div id="visitslist" class="userNumbers">
+                {{getVisits(dataAllUser[keys(index, data)])}}
+              </div>
+              <div id="badgeslist" class="userNumbers">
+                {{getBadges(dataAllUser[keys(index, data)])}}
+              </div>
+              <div id="surveyslist" class="userNumbers">
+                {{getSurveys(dataAllUser[keys(index, data)])}}
+              </div>
+            </paper-item>
+          </a>
         </template>
       </paper-menu>
     </div>
@@ -82,7 +77,6 @@
     },
     getVisits: function(user) {
       var theCount = 0
-
       for (var index in user.log) {
         if (user.log.hasOwnProperty(index)) {
           user.log[index]
