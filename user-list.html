@@ -61,6 +61,9 @@
               <div id="surveyslist" class="userNumbers">
                 {{getSurveys(dataAllUser,index, data)}}
               </div>
+              <div class="userNumbers">
+                {{getUsers(dataAllUser,index, data)}}
+              </div>
             </paper-item>
           </a>
         </template>
@@ -129,6 +132,13 @@
       } else {
         return Object.keys(data)[index]
       }
-    }
+    },
+    getUsers:  function(allUsers, index, data) {
+      var user = allUsers[Object.keys(data)[index]]
+      if (user.hasOwnProperty("users")){
+        return "Admin"
+      } else {
+        return "User"
+      }
   })
 </script>
