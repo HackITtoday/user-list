@@ -136,7 +136,7 @@
     getUsers:  function(allUsers, index, data) {
       var user = allUsers[Object.keys(data)[index]]
       if (user.hasOwnProperty("users")){
-        return "Admin"
+        return "Admin ("+Object.keys(user.users).length+")"
       } else {
         return "User"
       }
