@@ -36,7 +36,7 @@
         border-bottom-style: inset;
       }
     </style>
-    <mediator-data data="{{data}}" folder="{{cat(uid,'/users')}}" location="https://hi9site.firebaseio.com/users" as-array="{{users}}"></mediator-data>
+    <mediator-data data="{{data}}" folder="{{cat(uid,'/users')}}" location="https://hi9site.firebaseio.com/admin" as-array="{{users}}"></mediator-data>
     <iron-ajax auto url="https://hi9site.firebaseio.com/users.json" last-response="{{dataAllUser}}"></iron-ajax>
     <div id="userHeadings" style="font-size: 24px; float: left; width: 100%; margin-left: 30px;">
       <div id="nameOf" class="topHeading" style="margin-right:270px;">Name</div>
